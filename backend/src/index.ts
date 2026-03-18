@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
 import carsRoutes from "./routes/cars";
 import bookingsRoutes from "./routes/bookings";
+import { initDB } from "./db/pool";
 
 dotenv.config();
 
@@ -17,6 +18,10 @@ app.use("/api/cars", carsRoutes);
 app.use("/api/bookings", bookingsRoutes);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+
+initDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 });
+
