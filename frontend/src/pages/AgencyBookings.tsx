@@ -27,9 +27,17 @@ export default function AgencyBookings() {
 
   useEffect(() => {
     getAgencyBookings()
-      .then((res) => setBookings(res.data))
-      .finally(() => setLoading(false));
+      .then((res) => {
+        setBookings(res.data as Booking[]);
+      })
+      .catch(() => {
+        // Handle error
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
+
 
   if (loading) {
     return (

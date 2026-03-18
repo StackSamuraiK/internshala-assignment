@@ -1,7 +1,9 @@
-import { useEffect, useState, FormEvent } from "react";
+import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { getCars } from "@/api/cars";
+
 import { createBooking } from "@/api/bookings";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -39,9 +41,17 @@ export default function AvailableCars() {
 
   useEffect(() => {
     getCars()
-      .then((res) => setCars(res.data))
-      .finally(() => setLoading(false));
+      .then((res) => {
+        setCars(res.data as Car[]);
+      })
+      .catch(() => {
+        // Handle error if needed
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
+
 
   function handleRentClick(carId: number) {
     if (!user) {

@@ -1,6 +1,8 @@
-import { useEffect, useState, FormEvent } from "react";
+import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { addCar, getCars, updateCar } from "@/api/cars";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,7 +37,7 @@ export default function AddEditCar() {
   useEffect(() => {
     if (!isEdit) return;
     getCars().then((res) => {
-      const car = res.data.find((c: Car) => c.id === Number(id));
+      const car = (res.data as Car[]).find((c: Car) => c.id === Number(id));
       if (car) {
         setVehicleModel(car.vehicle_model);
         setVehicleNumber(car.vehicle_number);
@@ -43,6 +45,7 @@ export default function AddEditCar() {
         setRentPerDay(car.rent_per_day);
       }
     });
+
   }, [id, isEdit]);
 
   async function handleSubmit(e: FormEvent) {
