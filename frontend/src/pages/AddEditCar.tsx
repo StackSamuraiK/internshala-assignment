@@ -73,69 +73,95 @@ export default function AddEditCar() {
   }
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-10">
-      <Card>
-        <CardHeader>
-          <CardTitle>{isEdit ? "Edit car" : "Add new car"}</CardTitle>
+    <div className="max-w-xl mx-auto px-4 py-12 transition-all duration-500">
+      <Card className="shadow-2xl border-border/40 glass animate-in fade-in slide-in-from-bottom-6 duration-700">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold tracking-tight">
+            {isEdit ? "Update Vehicle" : "Add New Vehicle"}
+          </CardTitle>
           <CardDescription>
-            {isEdit ? "Update vehicle details" : "Add a vehicle to your fleet"}
+            {isEdit ? "Modify the details of your listed vehicle" : "Fill in the details to list a new car in your fleet"}
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
-            {error && <p className="text-sm text-destructive">{error}</p>}
-            <div className="space-y-1">
-              <Label htmlFor="model">Vehicle model</Label>
-              <Input
-                id="model"
-                value={vehicleModel}
-                onChange={(e) => setVehicleModel(e.target.value)}
-                placeholder="e.g. Toyota Innova"
-                required
-              />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="number">Vehicle number</Label>
-              <Input
-                id="number"
-                value={vehicleNumber}
-                onChange={(e) => setVehicleNumber(e.target.value)}
-                placeholder="e.g. MH12AB1234"
-                required
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1">
-                <Label htmlFor="seats">Seating capacity</Label>
+          <CardContent className="space-y-6">
+            {error && (
+              <div className="p-3 rounded-md bg-destructive/10 text-destructive text-sm font-medium border border-destructive/20 animate-in fade-in zoom-in duration-300">
+                {error}
+              </div>
+            )}
+            <div className="grid gap-5">
+              <div className="space-y-2">
+                <Label htmlFor="model">Vehicle Model</Label>
                 <Input
-                  id="seats"
-                  type="number"
-                  min={1}
-                  max={50}
-                  value={seatingCapacity}
-                  onChange={(e) => setSeatingCapacity(e.target.value)}
+                  id="model"
+                  value={vehicleModel}
+                  onChange={(e) => setVehicleModel(e.target.value)}
+                  placeholder="e.g. Toyota Innova Hycross"
                   required
+                  className="bg-background/50 focus:bg-background transition-all"
                 />
               </div>
-              <div className="space-y-1">
-                <Label htmlFor="rent">Rent per day (₹)</Label>
+              <div className="space-y-2">
+                <Label htmlFor="number">Vehicle Number</Label>
                 <Input
-                  id="rent"
-                  type="number"
-                  min={1}
-                  step="0.01"
-                  value={rentPerDay}
-                  onChange={(e) => setRentPerDay(e.target.value)}
+                  id="number"
+                  value={vehicleNumber}
+                  onChange={(e) => setVehicleNumber(e.target.value)}
+                  placeholder="e.g. MH 12 AB 1234"
                   required
+                  className="bg-background/50 font-mono focus:bg-background transition-all uppercase"
                 />
               </div>
+              <div className="grid grid-cols-2 gap-5">
+                <div className="space-y-2">
+                  <Label htmlFor="seats">Seating Capacity</Label>
+                  <Input
+                    id="seats"
+                    type="number"
+                    min={1}
+                    max={50}
+                    value={seatingCapacity}
+                    onChange={(e) => setSeatingCapacity(e.target.value)}
+                    required
+                    className="bg-background/50 focus:bg-background transition-all"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="rent">Rent per Day (₹)</Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">₹</span>
+                    <Input
+                      id="rent"
+                      type="number"
+                      min={1}
+                      step="0.01"
+                      value={rentPerDay}
+                      onChange={(e) => setRentPerDay(e.target.value)}
+                      required
+                      className="bg-background/50 pl-7 focus:bg-background transition-all font-medium"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Saving..." : isEdit ? "Save changes" : "Add car"}
-            </Button>
+            <div className="pt-2 flex flex-col sm:flex-row gap-3">
+              <Button type="submit" className="flex-1 h-11" disabled={loading}>
+                {loading ? "Saving..." : isEdit ? "Update Vehicle Details" : "Add to Fleet"}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="h-11 px-6"
+                onClick={() => navigate("/cars")}
+              >
+                Cancel
+              </Button>
+            </div>
           </CardContent>
         </form>
       </Card>
     </div>
+
   );
 }

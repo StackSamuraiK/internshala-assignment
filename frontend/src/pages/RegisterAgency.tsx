@@ -46,7 +46,8 @@ export default function RegisterAgency() {
             Register your rental agency to start listing cars
           </CardDescription>
         </CardHeader>
-        <form onSubmit={handleRegister}>
+        <form onSubmit={handleSubmit}>
+
           <CardContent className="space-y-4">
             {error && (
               <div className="p-3 rounded-md bg-destructive/10 text-destructive text-sm font-medium border border-destructive/20 animate-in fade-in zoom-in duration-300">
