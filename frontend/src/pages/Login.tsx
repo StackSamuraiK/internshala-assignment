@@ -41,29 +41,34 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle>Sign in</CardTitle>
-          <CardDescription>Enter your credentials to continue</CardDescription>
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 bg-transparent">
+      <Card className="w-full max-w-md shadow-2xl border-border/40 glass">
+        <CardHeader className="space-y-1 text-center">
+          <CardTitle className="text-2xl font-bold tracking-tight">Welcome back</CardTitle>
+          <CardDescription>
+            Enter your email and password to access your account
+          </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
             {error && (
-              <p className="text-sm text-destructive">{error}</p>
+              <div className="p-3 rounded-md bg-destructive/10 text-destructive text-sm font-medium border border-destructive/20 animate-in fade-in zoom-in duration-300">
+                {error}
+              </div>
             )}
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
+                placeholder="name@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                autoComplete="email"
+                className="bg-background/50 focus:bg-background transition-all"
               />
             </div>
-            <div className="space-y-1">
+            <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
@@ -71,24 +76,30 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                autoComplete="current-password"
+                className="bg-background/50 focus:bg-background transition-all"
               />
             </div>
-          </CardContent>
-          <CardFooter className="flex flex-col gap-3">
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Signing in..." : "Sign in"}
+            <Button type="submit" className="w-full h-10" disabled={loading}>
+              {loading ? "Signing in..." : "Sign In"}
             </Button>
-            <p className="text-xs text-muted-foreground text-center">
-              No account?{" "}
-              <Link to="/register/customer" className="underline">
-                Register as customer
-              </Link>{" "}
-              or{" "}
-              <Link to="/register/agency" className="underline">
-                agency
+          </CardContent>
+          <CardFooter className="flex flex-col gap-4 text-center">
+            <p className="text-sm text-muted-foreground">
+              Don't have an account?{" "}
+              <Link
+                to="/register/customer"
+                className="font-semibold text-primary hover:underline underline-offset-4"
+              >
+                Sign up
               </Link>
             </p>
+            <div className="h-px w-full bg-border/50" />
+            <Link
+              to="/cars"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Back to car list
+            </Link>
           </CardFooter>
         </form>
       </Card>

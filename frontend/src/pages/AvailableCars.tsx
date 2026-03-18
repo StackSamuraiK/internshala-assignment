@@ -99,24 +99,33 @@ export default function AvailableCars() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {cars.map((car) => (
-            <Card key={car.id}>
+            <Card key={car.id} className="card-hover border-border/50 group">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between gap-2">
-                  <CardTitle className="text-base">{car.vehicle_model}</CardTitle>
-                  <Badge variant="secondary">{car.vehicle_number}</Badge>
+                  <CardTitle className="text-base group-hover:text-primary transition-colors">
+                    {car.vehicle_model}
+                  </CardTitle>
+                  <Badge variant="secondary" className="font-mono text-[10px]">
+                    {car.vehicle_number}
+                  </Badge>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-2 text-sm">
+                <div className="grid grid-cols-2 gap-4 text-sm p-3 bg-muted/30 rounded-lg border border-border/20">
                   <div>
-                    <p className="text-muted-foreground text-xs">Seats</p>
+                    <p className="text-muted-foreground text-[10px] uppercase font-semibold tracking-wider">
+                      Seats
+                    </p>
                     <p className="font-medium">{car.seating_capacity}</p>
                   </div>
                   <div>
-                    <p className="text-muted-foreground text-xs">Per day</p>
-                    <p className="font-medium">₹{parseFloat(car.rent_per_day).toLocaleString()}</p>
+                    <p className="text-muted-foreground text-[10px] uppercase font-semibold tracking-wider">
+                      Per day
+                    </p>
+                    <p className="font-medium text-primary">₹{parseFloat(car.rent_per_day).toLocaleString()}</p>
                   </div>
                 </div>
+
 
                 {feedback?.id === car.id && (
                   <p

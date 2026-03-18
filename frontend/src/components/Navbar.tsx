@@ -1,68 +1,75 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  function handleLogout() {
+  const handleLogout = () => {
     logout();
-    navigate("/cars");
-  }
+    navigate("/login");
+  };
 
   return (
-    <header className="border-b bg-background sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-        <Link to="/cars" className="text-sm font-semibold tracking-tight">
-          CarRental
+    <nav className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
+      <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        <Link to="/" className="flex items-center gap-2 group">
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold group-hover:scale-110 transition-transform">
+            C
+          </div>
+          <span className="font-bold text-xl tracking-tight">CarRent</span>
         </Link>
-
-        <nav className="flex items-center gap-3">
+        <div className="flex items-center gap-6">
           <Link
             to="/cars"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
-            Browse Cars
+            Browse
           </Link>
-
-          {user?.role === "agency" && (
-            <>
-              <Link
-                to="/agency/cars/add"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Add Car
-              </Link>
-              <Link
-                to="/agency/bookings"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Bookings
-              </Link>
-            </>
-          )}
-
           {user ? (
+            <>
+              {user.role === "agency" && (
+                <>
+                  <Link
+                    to="/agency/cars/add"
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Add Car
+                  </Link>
+                  <Link
+                    to="/agency/bookings"
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Bookings
+                  </Link>
+                </>
+              )}
+              <div className="flex items-center gap-3 pl-4 border-l">
+                <div className="text-right hidden sm:block">
+                  <p className="text-xs font-semibold">{user.name}</p>
+                  <p className="text-[10px] text-muted-foreground capitalize">
+                    {user.role}
+                  </p>
+                </div>
+                <Button variant="ghost" size="sm" onClick={handleLogout} className="text-xs">
+                  Logout
+                </Button>
+              </div>
+            </>
+          ) : (
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="hidden sm:flex">
-                {user.role}
-              </Badge>
-              <span className="text-sm text-muted-foreground hidden sm:block">
-                {user.name}
-              </span>
-              <Button variant="outline" size="sm" onClick={handleLogout}>
-                Logout
+              <Button asChild variant="ghost" size="sm">
+                <Link to="/login">Login</Link>
+              </Button>
+              <Button asChild size="sm" className="hidden sm:inline-flex">
+                <Link to="/register/customer">Register</Link>
               </Button>
             </div>
-          ) : (
-            <Button size="sm" asChild>
-              <Link to="/login">Login</Link>
-            </Button>
           )}
-        </nav>
+        </div>
       </div>
-    </header>
+    </nav>
   );
 }
