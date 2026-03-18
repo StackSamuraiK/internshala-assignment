@@ -1,0 +1,28 @@
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role VARCHAR(10) NOT NULL CHECK (role IN ('customer', 'agency')),
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS cars (
+  id SERIAL PRIMARY KEY,
+  agency_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  vehicle_model VARCHAR(100) NOT NULL,
+  vehicle_number VARCHAR(50) NOT NULL UNIQUE,
+  seating_capacity INTEGER NOT NULL,
+  rent_per_day NUMERIC(10, 2) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS bookings (
+  id SERIAL PRIMARY KEY,
+  car_id INTEGER NOT NULL REFERENCES cars(id) ON DELETE CASCADE,
+  customer_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  start_date DATE NOT NULL,
+  num_days INTEGER NOT NULL,
+  total_cost NUMERIC(10, 2) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
