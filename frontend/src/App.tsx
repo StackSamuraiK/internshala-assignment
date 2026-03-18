@@ -1,7 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
 import Navbar from "@/components/Navbar";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import RegisterCustomer from "@/pages/RegisterCustomer";
 import RegisterAgency from "@/pages/RegisterAgency";
@@ -16,7 +17,8 @@ export default function App() {
         <Navbar />
         <main>
           <Routes>
-            <Route path="/" element={<Navigate to="/cars" replace />} />
+            <Route path="/" element={<Home />} />
+
             <Route path="/cars" element={<AvailableCars />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register/customer" element={<RegisterCustomer />} />

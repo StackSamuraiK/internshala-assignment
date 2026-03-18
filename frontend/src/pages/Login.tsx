@@ -94,15 +94,29 @@ export default function Login() {
               </Link>
             </p>
             <div className="h-px w-full bg-border/50" />
+            
+            <div className="text-[10px] text-muted-foreground bg-muted/30 p-3 rounded-lg border border-border/20 text-left space-y-1">
+              <p className="font-bold uppercase tracking-widest mb-1">Demo Credentials</p>
+              <div className="grid grid-cols-2 gap-x-2">
+                <span>Agency:</span>
+                <code className="text-primary">agency@demo.com</code>
+                <span>Customer:</span>
+                <code className="text-primary">user@demo.com</code>
+                <span>Password:</span>
+                <code className="text-primary">password123</code>
+              </div>
+            </div>
+
             <Link
-              to="/cars"
+              to="/"
               className="text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
-              Back to car list
+              Back to Home
             </Link>
           </CardFooter>
         </form>
       </Card>
     </div>
+
   );
 }
